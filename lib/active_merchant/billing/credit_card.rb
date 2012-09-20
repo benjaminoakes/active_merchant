@@ -209,6 +209,26 @@ module ActiveMerchant #:nodoc:
         require_verification_value
       end
 
+      # Retain unfiltered inspect, but override below.
+      alias :unfiltered_inspect :inspect
+      alias :unfiltered_ai :ai
+
+      # Inspects a filtered object.
+      #
+      # This is overridden to prevent accidental logging of credit card information.
+      #
+      # If you need to see the unfiltered version, use <tt>unfiltered_inspect</tt> instead.
+      def inspect
+        "#<#{ self.class.name } FILTERED>"
+      end
+
+      # Inspects a filtered object when using <tt>awesome_print</tt>.
+      #
+      # See <tt>inspect</tt>, <tt>unfiltered_ai</tt>.
+      def ai(*)
+        inspect
+      end
+
       private
 
       def before_validate #:nodoc:
