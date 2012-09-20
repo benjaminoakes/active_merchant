@@ -8,6 +8,7 @@ module ActiveMerchant #:nodoc:
       #   format(05,   :four_digits) # => "0005"
       def format(number, option)
         return '' if number.blank?
+        number = number.to_i
         
         case option
           when :two_digits  ; sprintf("%.2i", number)[-2..-1]
